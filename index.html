@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flujo de Trabajo Git - UNIFRANZ</title>
+    <style>
+        :root {
+            --bg-color: #11111b; /* Fondo más profundo y moderno */
+            --text-color: #cdd6f4;
+            --primary-orange: #f36c21; /* Naranja UNIFRANZ */
+            --secondary-orange: #ff8c4a;
+            --card-bg: #1e1e2e;
+            --container-bg: #181825;
+            --accent-green: #a6e3a1;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: var(--primary-orange);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 10px rgba(243, 108, 33, 0.2);
+        }
+
+        h2 {
+            color: var(--text-color);
+            text-align: center;
+            font-size: 1.8rem;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--primary-orange);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #a6adc8;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Contenedor del Diagrama mucho más elegante */
+        .diagram-container {
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+            border: 1px solid #313244;
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+
+        /* Grid del Glosario estilizado */
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        .term-card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border-top: 4px solid var(--primary-orange);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .term-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, rgba(243, 108, 33, 0.03) 0%, rgba(0,0,0,0) 100%);
+            pointer-events: none;
+        }
+
+        .term-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+            border-top-color: var(--secondary-orange);
+        }
+
+        .term-title {
+            color: var(--primary-orange);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .term-desc {
+            font-size: 1rem;
+            color: #bac2de;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+    </style>
+    
+    <!-- Configuración avanzada de Mermaid para estética Dark/Orange -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#313244',
+                primaryTextColor: '#cdd6f4',
+                primaryBorderColor: '#f36c21',
+                lineColor: '#ff8c4a',
+                secondaryColor: '#f36c21',
+                tertiaryColor: '#1e1e2e',
+                clusterBkg: '#181825',
+                clusterBorder: '#585b70',
+                mainBkg: '#313244',
+                edgeLabelBackground: '#1e1e2e',
+                fontFamily: 'Segoe UI, sans-serif',
+                fontSize: '14px'
+            },
+            flowchart: {
+                htmlLabels: true,
+                curve: 'basis', /* Hace que las flechas sean curvas y fluidas */
+                padding: 20
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Flujo de Trabajo Colaborativo: Git + GitHub</h1>
+        <p class="subtitle">Guía visual para el proyecto "Arena de Mitos y Leyendas"</p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+                flowchart TD
+                    subgraph Fase1 ["FASE 1: Preparación (Se hace UNA SOLA VEZ)"]
+                        direction TB
+                        A["1. Docente crea proyecto en Visual Studio"] --> B("2. Docente sube código a GitHub (Rama 'main')")
+                        B --> C["3. Estudiante hace FORK (Copia en su cuenta web)"]
+                        C --> D["4. Estudiante hace CLONE (Descarga a su PC)"]
+                    end
+
+                    subgraph Fase2 ["FASE 2: Trabajo Diario (Se repite siempre)"]
+                        direction TB
+                        D --> E[["5. Estudiante crea RAMA / BRANCH (Ej: 'rama-duende')"]]
+                        E --> F("6. Estudiante PROGRAMA (Crea sus clases)")
+                        F --> G[["7. Estudiante hace COMMIT (Guarda localmente)"]]
+                        G --> H[["8. Estudiante hace PUSH (Sube a SU nube)"]]
+                        H -.->|"Si hay errores locales"| F
+                    end
+
+                    subgraph Fase3 ["FASE 3: Revisión e Integración"]
+                        direction TB
+                        H --> I["9. Estudiante presiona en la web: COMPARE & PULL REQUEST"]
+                        I --> J("10. Estudiante crea el PULL REQUEST (Avisa al Docente)")
+                        J --> K{"11. Docente Revisa"}
+                        K -->|"Rechazado"| L["Docente pide correcciones"]
+                        L -.->|"Estudiante corrige"| F
+                        K -->|"Aprobado!"| M[["12. Docente hace MERGE PULL REQUEST"]]
+                        M --> N((("Código integrado a la rama 'main' original")))
+                    end
+            </pre>
+        </div>
+
+        <h2>Glosario de Términos (Para Estudiantes)</h2>
+        <div class="glossary-grid">
+            
+            <div class="term-card">
+                <div class="term-title">Main (o Master)</div>
+                <div class="term-desc">Es la línea de tiempo principal y oficial del proyecto. Es el "trabajo en limpio". <span class="highlight">Regla de oro: Nunca se programa directamente en el Main.</span></div>
+            </div>
+
+            <div class="term-card">
+                <div class="term-title">Fork (Bifurcar)</div>
+                <div class="term-desc">Acción en la web de GitHub. Consiste en sacarle una fotocopia exacta al proyecto del docente y guardarla en tu propia cuenta de GitHub para que puedas modificarla sin pedir permiso.</div>
+            </div>
+
+            <div class="term-card">
+                <div class="term-title">Branch (Rama)</div>
+                <div class="term-desc">Es crear un "universo paralelo" dentro de tu proyecto. Te permite hacer experimentos o crear tus clases de forma aislada. Si lo arruinas, la rama principal sigue intacta.</div>
+            </div>
+
+            <div class="term-card">
+                <div class="term-title">Commit (Guardar Localmente)</div>
+                <div class="term-desc">Es como el "Guardar Partida" en un videojuego, pero requiere un título (ej. "Se agregó el método Atacar"). Guarda el progreso <b>solo en tu computadora</b>.</div>
+            </div>
+
+            <div class="term-card">
+                <div class="term-title">Push (Empujar)</div>
+                <div class="term-desc">Es la acción de subir todos tus "Guardados" (Commits) desde tu computadora hacia tu nube en GitHub.</div>
+            </div>
+
+            <div class="term-card">
+                <div class="term-title">Pull Request (PR)</div>
+                <div class="term-desc">Es una solicitud formal al dueño del proyecto original. Le estás diciendo: <span class="highlight">"Profe, terminé mi parte, revise mi código y únalo al juego principal".</span></div>
+            </div>
+
+            <div class="term-card">
+                <div class="term-title">Merge Pull Request</div>
+                <div class="term-desc">Es el botón definitivo que presiona el Líder/Docente. Aprueba tu solicitud y tu código pasa a formar parte oficial del proyecto general de la clase.</div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
